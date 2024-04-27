@@ -1,0 +1,16 @@
+.login-container {
+  width: 50%;
+  margin: 5rem auto;
+}
+
+.input{
+  border: 1px solid #9c9a9a;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.sa{
+  padding: 15px;
+  background-color: rgba(255, 0, 0, 0.145);
+  border-radius: 6px;
+  margin-bottom: 10px;
+}

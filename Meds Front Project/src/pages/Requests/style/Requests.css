@@ -1,0 +1,56 @@
+h1 {
+    display: block;
+    font-size: 3em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.crud4{
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+table th,table td{
+    border:1px solid black ;
+    text-align: center;
+    padding: 2px 40px;
+    font-size: larger;
+    color: green;
+    background-color: rgb(221, 210, 210);
+
+}
+table th{
+    color: white;
+    background-color: rgb(57, 180, 57);
+}
+table{
+    border-collapse: collapse ;
+}
+button{
+    margin: 6px 4px;
+    border: none;
+    background-color: rgb(57, 180, 57);
+    padding: 12px 0px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    align-items: center;
+    font-weight: 600;
+    width: 2cm;
+    margin-bottom: 30px;  
+
+}
+.addform{
+    margin-bottom: 30px;
+}
+.addform input{
+    width: 230px;
+    color: white;
+    background-color: rgb(57, 180, 57) ;
+}
+.addform button:hover{
+    background-color: rgb(5, 86, 5);
+}

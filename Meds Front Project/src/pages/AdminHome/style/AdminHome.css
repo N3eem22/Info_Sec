@@ -1,0 +1,40 @@
+.button-admin{
+    margin: 6px 4px;
+    border: none;
+    background-color: rgb(57, 180, 57);
+    padding: 25px 0px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    align-items: center;
+    font-weight: 600;
+    width: 15cm;
+    margin-bottom: 30px;
+    font-size: larger;
+    }
+
+.button-Wrapper{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center ;
+    
+}
+.app{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: var(--background);
+    font-family: "IBM Plex Mono" , monospace;
+}
+h1 {
+    display: block;
+    font-size: 4.5em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}

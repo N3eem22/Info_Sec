@@ -1,0 +1,16 @@
+/*.app{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: var(--background);
+    font-family: "IBM Plex Mono" , monospace;
+}
+.button{
+    margin: 6px 0px;
+    cursor: pointer;
+}
+.primaryBtn{
+  background-color: aqua;
+}*\\

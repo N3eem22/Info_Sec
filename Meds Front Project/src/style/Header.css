@@ -1,0 +1,36 @@
+.main-header{
+    background-color: #008040;
+    color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.main-header.logo{
+    width:20%;
+}
+.main-header .logo img{
+    width: 70%;
+    height: 60px;
+    object-fit:contain;
+}
+.main-header nav{
+    width:80%;
+}
+.main-header nav ul{
+    list-style-type: none;
+}
+.main-header nav li{
+    display: inline-block;
+    padding: 0 15px;
+}
+.main-header nav li a{
+    color: white;
+    text-decoration: none;
+}
+.main-header nav li a:hover{
+    color: black;
+    cursor: pointer;
+}

@@ -1,0 +1,20 @@
+/* :root{
+    --dark-color: #19283f;
+    --green-color:#33d1cc;
+    --red-color: #ff3150;
+    --yello-color: #ffc400;
+    --section-color: #eff7fa;
+} */
+
+/* .mytable{
+    min-height: 1vh;
+} */
+
+/* .table .table-h{
+    background-color: var(--dark-color);
+    color: var(--yello-color);
+} */
+
+.RofUser-m{
+    color:#008040 !important ;
+}

@@ -1,0 +1,22 @@
+.image-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+  }
+  .table-ta{
+    background-color: #008040 !important;
+  }
+
+  .add-m{
+    color:#008040 !important ;
+    padding-bottom: 20px;
+    
+  }
+  .manage-m{
+    color:#008040 !important ;
+  }
+
+  .ppmm{
+    background-color: transparent !important;
+    border: none;
+  }
