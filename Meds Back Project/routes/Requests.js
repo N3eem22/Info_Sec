@@ -8,7 +8,7 @@ const { body, validationResult } = require("express-validator");
 const upload = require("../middleware/uploadImages");
 const util = require("util"); // helper
 const fs = require("fs"); // file system
-
+const verifyJWT= require("../middleware/verifyJWT.JS");
 
 const date = new Date();
 let currentDay= String(date.getDate()).padStart(2, '0');
@@ -34,7 +34,7 @@ console.log(typeof(currentDate));
 // -5 Accept  requests [Admin]
 router.put(
     "/accept/:id", 
-    authorized,
+    verifyJWT,
     //admin,
     async (req, res) => {
     try {
@@ -70,8 +70,7 @@ router.put(
 // -5 Reject  requests [Admin]
 router.put(
     "/reject/:id", 
-    //admin,
-    //authorized,
+    verifyJWT , admin,
     async (req, res) => {
     try {
         const query = util.promisify(conn.query).bind(conn);
@@ -106,7 +105,7 @@ router.put(
 // -5 DELETE Request [Admin]
 router.delete(
     "/:id", // params
-    admin,
+    verifyJWT , admin,
     async (req, res) => {
         try {
             // 1- CHECK IF requests EXISTS OR NOT
@@ -135,7 +134,7 @@ router.delete(
 );
 
 // -6 Show all requests that waiting for acceptance [Admin]
-router.get("",admin,async(req, res) => {
+router.get("", verifyJWT , admin,async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
         const requests = await query("select * from requests ");
@@ -197,7 +196,7 @@ router.get("",admin,async(req, res) => {
 
 
 // -6 Show all requests for a user [user]
-router.get("/user",authorized,async(req, res) => {
+router.get("/user",verifyJWT,async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
         const requests = await query("select * from requests where id_user = ?",[res.locals.user.id]);
@@ -259,7 +258,7 @@ router.get("/user",authorized,async(req, res) => {
 // -9 Send Request  by Id[User]
 router.post(
     "/:id",
-    authorized,
+     verifyJWT ,
     async (req, res) => {
     try {
 

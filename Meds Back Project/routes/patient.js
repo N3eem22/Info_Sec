@@ -10,11 +10,11 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const {encrypt} = require("../middleware/Crypto");
 const {decrypt} = require("../middleware/Crypto");
-
+const verifyJWT= require("../middleware/verifyJWT.JS");
 // 4-1 CREATE patient [ADMIN]
 router.post(
     "",
-    admin,
+    verifyJWT , admin,
     body("email")
     .isEmail()
     .withMessage("please enter a valid email!"),
@@ -79,7 +79,7 @@ router.post(
 // 4-2 UPDATE patient [ADMIN]
 router.put(
     "/:id", // params
-    admin,
+    verifyJWT , admin,
     upload.single("image"),
     // body("email").isString()
     // .withMessage("please enter a valid email!"),
@@ -154,7 +154,7 @@ router.put(
 // 4-3 DELETE patient [ADMIN]
 router.delete(
     "/:id", // params
-    admin,
+    verifyJWT , admin,
     async(req, res) => {
         try {
             // 1- CHECK IF patient EXISTS OR NOT
@@ -178,7 +178,7 @@ router.delete(
 
 
 // 4-4 show All patient [ADMIN]
-router.get("",admin, async(req, res) => {
+router.get("",verifyJWT , admin,async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
         const patients = await query("select * from users");
@@ -218,7 +218,7 @@ router.get("",admin, async(req, res) => {
 
 // Show A patient [ADMIN]
 router.get("/:id",
-    admin,
+    admin,verifyJWT ,
     async(req, res) => {
         const query = util.promisify(conn.query).bind(conn);
         const patient = await query("select * from users where id = ?", [

@@ -8,13 +8,13 @@ const util = require("util"); // helper
 const fs = require("fs"); // file system
 const { decrypt } = require("../middleware/Crypto");
 const encrypt = require("../middleware/Crypto").encrypt;
-
+const verifyJWT = require("../middleware/verifyJWT.JS")
 
 
 // 2-1 CREATE medicine [ADMIN]
 router.post(
     "",
-    admin,
+    verifyJWT , admin,
     upload.single("image"),
     body("name")
     .isString()

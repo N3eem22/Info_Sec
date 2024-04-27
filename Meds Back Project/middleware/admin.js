@@ -1,19 +1,20 @@
-
-const conn = require("../db/dbConnection");
-const util = require("util"); // helper
-
-const admin = async (req, res, next) => {
-  const query = util.promisify(conn.query).bind(conn);
-  const { token } = req.headers;
-  const admin = await query("select * from users where token = ?", [token]);
-  if (admin[0] && admin[0].role == "1") {
-    res.locals.admin = admin[0];
-    next();
-  } else {
-    res.status(403).json({
-      msg: "you are not authorized to access this route !",
+const admin = (req, res, next) => {
+  if (!req.user) {
+    // If there's no user data, the user is not authenticated
+    return res.status(403).json({
+      msg: "Error Uccured",
     });
   }
+
+  if (req.user.role !== 1) {
+    // Check if user role is not admin
+    return res.status(403).json({
+      msg: "You are not authorized to access this route!",
+    });
+  }
+
+  // If the user is an admin, continue to the next middleware or route handler
+  next();
 };
 
 module.exports = admin;

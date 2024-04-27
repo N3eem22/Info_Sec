@@ -22,7 +22,7 @@ const ListMedicines = () => {
     useEffect(() => {
       setmedicines({ ...medicines, loading: true });
       axios
-        .get("http://localhost:4000/search", {
+        .get("http://localhost:4000/search", {   withCredentials: true,
           params: {
             search: search,
           },

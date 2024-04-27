@@ -28,6 +28,7 @@ const Login = ()=>{
       .then((resp) => {
         setLogin({ ...login, loading: false, err: [] });
         setAuthUser(resp.data);
+        sessionStorage.setItem("authUser", JSON.stringify(resp.data));
         navigate("/");
       })
       .catch((err) => {

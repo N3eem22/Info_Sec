@@ -7,7 +7,7 @@ const upload = require("../middleware/uploadImages");
 const util = require("util"); // helper
 const fs = require("fs"); // file system
 
-
+const verifyJWT= require("../middleware/verifyJWT.JS");
 
 
 
@@ -84,7 +84,7 @@ router.post(
 // 3-2 UPDATE category [ADMIN]
 router.put(
     "/:id", // params
-    admin,
+    verifyJWT , admin,
     upload.single("image"),
     body("name")
     .isString()
@@ -135,7 +135,7 @@ router.put(
 // 3-3 DELETE category [ADMIN]
 router.delete(
     "/:id", // params
-    admin,
+    verifyJWT , admin,
     async (req, res) => {
         try {
             // 1- CHECK IF category EXISTS OR NOT
@@ -166,7 +166,7 @@ router.delete(
 );
 
 // 3-4 show All category [ADMIN, USER]
-router.get("", authorized,async(req, res) => {
+router.get("",  verifyJWT ,async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
         const categories = await query("select * from categories");
@@ -196,7 +196,7 @@ router.get("", authorized,async(req, res) => {
 
 
 // show A category [ADMIN, USER]
-router.get("/:id",authorized ,async(req, res) => {
+router.get("/:id", verifyJWT ,async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
          const categories = await query("select * from categories where id = ?", [

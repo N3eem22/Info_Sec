@@ -9,6 +9,8 @@ const fs = require("fs"); // file system
 
 const {encrypt} = require("../middleware/Crypto");
 const verifyJWT = require("../middleware/VerifyJWT.JS");
+const { log } = require("util");
+const session = require("express-session");
 
 
 
@@ -16,15 +18,14 @@ const verifyJWT = require("../middleware/VerifyJWT.JS");
 
 
 // 10- SEARCH and Store history [USER]
-router.get(
-    ""
-    ,verifyJWT
+router.get("",verifyJWT
     , async (req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
         let search = null;
         let medicines = null;
-
+        console.log(req.user.role);
+        
         if (req.query.search ) {
             // QUERY PARAMS
             console.log("yes search")
@@ -37,7 +38,7 @@ router.get(
     
                 medicines.map((medicine) => {
                     medicine.image_url = "http://" + req.hostname + ":4000/" + medicine.image_url;
-                    medicine.description =encrypt(medicine.description);
+                    //medicine.description =encrypt(medicine.description);
 
                 });
                 
@@ -79,7 +80,7 @@ router.get(
             medicines = await query('select * from medicines');
             medicines.map((medicine) => {
                 medicine.image_url = "http://" + req.hostname + ":4000/" + medicine.image_url;
-                medicine.description =encrypt(medicine.description);
+                //medicine.description =encrypt(medicine.description);
 
             });
             res.status(200).json(medicines);
@@ -101,7 +102,7 @@ router.get(
 // 10-Show a history of medicine searches related to his account only A User [User]
 router.get(
     "/HistorySearches/:id_user",
-    authorized,
+    verifyJWT,
     async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);

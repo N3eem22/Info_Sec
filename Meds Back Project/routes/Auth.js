@@ -7,6 +7,7 @@ const crypto = require("crypto");
 const upload = require("../middleware/uploadImages");
 const {encrypt} = require("../middleware/Crypto") 
  const jwt =require("jsonwebtoken");
+const { log } = require("util");
 
 // 1-1 LOGIN
 router.post(
@@ -56,11 +57,14 @@ router.post(
               process.env.SESSION_SECRET,
               { expiresIn: "1h" }
             );
+
             res.cookie("jwt", token, {
-             // httpOnly: true,
-              secure: true,
+             //httpOnly: true,
+             // secure: true,
               maxAge: 24 * 60 * 60 * 1000,
             });
+            req.session.token = token;
+            //console.log(req.session.token);
             res.status(200).json(user[0]);
           } 
           else {
@@ -132,7 +136,7 @@ router.post(
             // 4- INSERT USER OBJECT INTO DB
             await query("insert into users set ? ", userData);
             delete userData.password;
-            userData.email = encrypt(userData.email)
+            //userData.email = encrypt(userData.email)
             req.session.user = userData;
             res.status(200).json(userData);
             

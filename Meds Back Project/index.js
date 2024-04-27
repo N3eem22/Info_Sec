@@ -17,7 +17,8 @@ app.use(session({
   secret: process.env.SESSION_SECRET,  // Secret key to sign the session ID cookie
   resave: false,              // Avoids resaving unchanged sessions
   saveUninitialized: true,   // Avoids creating new sessions until they are modified
-  cookie: { maxAge: 6000000 } // 2 hours session expiration
+  cookie: { maxAge: 600000000   , sameSite: 'lax'},
+// 2 hours session expiration
 }));
 
 // ====================  Required Module ====================
