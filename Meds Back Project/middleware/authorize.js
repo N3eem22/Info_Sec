@@ -10,7 +10,7 @@ const authorized = async (req, res, next) => {
     //console.log(req.headers.token);
   }
   else{ 
-    token  = req.body.headers.token;
+    token  = req.body.token;
   }
 
 

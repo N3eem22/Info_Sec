@@ -8,7 +8,8 @@ const util = require("util"); // helper
 const fs = require("fs"); // file system
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-
+const {encrypt} = require("../middleware/Crypto");
+const {decrypt} = require("../middleware/Crypto");
 
 // 4-1 CREATE patient [ADMIN]
 router.post(
@@ -27,6 +28,9 @@ router.post(
     body("password")
     .isLength({ min: 5, max: 50 })
     .withMessage("password should be between (5-50) character"),
+    body("Phone_Number")
+  .isLength({ min: 11, max: 11 })
+  .withMessage("This phone number isn't valid"),
     async(req, res) => {
         try {
             // 1- VALIDATION REQUEST [manual, express validation]
@@ -49,11 +53,13 @@ router.post(
             } else {
                 // 3- PREPARE patient OBJECT
                 1
+                
                 const users = {
                     name: req.body.name,
                     email: req.body.email,
                     password: await bcrypt.hash(req.body.password, 10),
-                    token: crypto.randomBytes(16).toString("hex"), // JSON WEB TOKEN, CRYPTO -> RANDOM ENCRYPTION STANDARD
+                    token: crypto.randomBytes(16).toString("hex"),
+                    Phone_Number :  encrypt(req.body.Phone_Number)
                 };
 
                 // 4 - INSERT patient INTO DB
@@ -121,6 +127,7 @@ router.put(
                         email: req.body.email || patient[0].email,
                         password:req.body.password || patient[0].password,
                         role: newRole ,
+                        Phone_Number :  encrypt(req.body.Phone_Number)
                     };
 
                     if (req.file) {
@@ -197,6 +204,7 @@ router.get("",admin, async(req, res) => {
 
             patients.map((patient) => {
                 patient.image_url = "http://" + req.hostname + ":4000/" + patient.image_url;
+               // patient.Phone_Number = decrypt(patient.Phone_Number)
             });
             res.status(200).json(patients);
         }

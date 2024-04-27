@@ -17,7 +17,7 @@ const {encrypt} = require("../middleware/Crypto");
 // 10- SEARCH and Store history [USER]
 router.get(
     ""
-    ,authorized
+    
     , async (req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);

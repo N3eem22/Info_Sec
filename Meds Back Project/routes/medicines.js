@@ -215,7 +215,7 @@ router.delete(
 );
 
 // 2-4 show All medicine [ADMIN, USER]
-router.get("",authorized, async(req, res) => {
+router.get("", async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
         const medicines = await query("select * from medicines");
@@ -279,7 +279,7 @@ router.get("/admin/:id", async(req, res) => {
 });
 
 // show A medicine [USER]
-router.get("/user/:id",authorized ,async(req, res) => {
+router.get("/user/:id", async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
          const medicine = await query("select * from medicines where id = ?", [
@@ -320,7 +320,7 @@ router.get("/user/:id",authorized ,async(req, res) => {
 // 8- Filter medicines depend on a category [USER]
 router.get(
     "/filter/:id_category"
-    ,authorized
+    
     , async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
@@ -377,7 +377,7 @@ router.get("/category/:id",async(req,res)=>{
                 val.expiration_date = Date.toISOString().slice(0,10);
                 medicines.description =encrypt(medicines.description);
 
-                
+            
             }
             medicines.map((Medicine) => {
                 Medicine.image_url = "http://" + req.hostname + ":4000/" + Medicine.image_url;
