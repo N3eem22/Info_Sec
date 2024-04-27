@@ -8,6 +8,7 @@ const util = require("util"); // helper
 const fs = require("fs"); // file system
 
 const {encrypt} = require("../middleware/Crypto");
+const verifyJWT = require("../middleware/VerifyJWT.JS");
 
 
 
@@ -17,7 +18,7 @@ const {encrypt} = require("../middleware/Crypto");
 // 10- SEARCH and Store history [USER]
 router.get(
     ""
-    
+    ,verifyJWT
     , async (req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);

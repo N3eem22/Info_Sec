@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const upload = require("../middleware/uploadImages");
 const {encrypt} = require("../middleware/Crypto") 
-
+ const jwt =require("jsonwebtoken");
 
 // 1-1 LOGIN
 router.post(
@@ -44,16 +44,30 @@ router.post(
             user[0].password
           );
           if (checkPassword) {
-            //delete user[0].password;
-            user[0].email = encrypt(user[0].email);
-            req.session.user = user[0]; 
+            delete user[0].password;
+            const token = jwt.sign(
+              {
+                UserInfo: {
+                  email: user[0].email,
+                  role: user[0].role,
+                  id: user[0].id,
+                },
+              },
+              process.env.SESSION_SECRET,
+              { expiresIn: "1h" }
+            );
+            res.cookie("jwt", token, {
+             // httpOnly: true,
+              secure: true,
+              maxAge: 24 * 60 * 60 * 1000,
+            });
             res.status(200).json(user[0]);
           } 
           else {
             res.status(404).json({
               errors: [
                 {
-                  msg: "email or password not found !",
+                  msg: " password not found !",
                 },
               ],
             });

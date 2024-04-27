@@ -8,6 +8,7 @@ require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //To Access url form encoded
 app.use(express.static("upload"));
+app.use(require("cookie-parser")());
 const cors = require("cors");
 app.use(cors()); // allow HTTP request local host
 const session = require('express-session');
@@ -15,8 +16,8 @@ const session = require('express-session');
 app.use(session({
   secret: process.env.SESSION_SECRET,  // Secret key to sign the session ID cookie
   resave: false,              // Avoids resaving unchanged sessions
-  saveUninitialized: false,   // Avoids creating new sessions until they are modified
-  cookie: { maxAge: 7200000 } // 2 hours session expiration
+  saveUninitialized: true,   // Avoids creating new sessions until they are modified
+  cookie: { maxAge: 6000000 } // 2 hours session expiration
 }));
 
 // ====================  Required Module ====================
