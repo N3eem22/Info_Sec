@@ -31,7 +31,9 @@ const Register = () => {
       })
       .then((resp) => {
         setRegister({ ...register, loading: false, err: [] });
-        setAuthUser(resp.data);
+        setAuthUser(resp.data.user);
+        //console.log(resp.data);
+        sessionStorage.setItem("Token", JSON.stringify(resp.data.Token));
         navigate("/");
       })
       .catch((errors) => {

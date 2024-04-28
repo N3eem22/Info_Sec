@@ -9,6 +9,7 @@ const upload = require("../middleware/uploadImages");
 const util = require("util"); // helper
 const fs = require("fs"); // file system
 const verifyJWT= require("../middleware/verifyJWT.JS");
+const { log } = require("util");
 
 const date = new Date();
 let currentDay= String(date.getDate()).padStart(2, '0');
@@ -33,9 +34,7 @@ console.log(typeof(currentDate));
 
 // -5 Accept  requests [Admin]
 router.put(
-    "/accept/:id", 
-    verifyJWT , admin,
-    //admin,
+    "/accept/:id",     //admin,
     async (req, res) => {
     try {
         const query = util.promisify(conn.query).bind(conn);
@@ -70,7 +69,6 @@ router.put(
 // -5 Reject  requests [Admin]
 router.put(
     "/reject/:id", 
-    verifyJWT , admin,
     async (req, res) => {
     try {
         const query = util.promisify(conn.query).bind(conn);
@@ -134,7 +132,7 @@ router.delete(
 );
 
 // -6 Show all requests that waiting for acceptance [Admin]
-router.get("", verifyJWT , admin,async(req, res) => {
+router.get("",async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
         const requests = await query("select * from requests ");
@@ -199,7 +197,7 @@ router.get("", verifyJWT , admin,async(req, res) => {
 router.get("/user",verifyJWT,async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
-        const requests = await query("select * from requests where id_user = ?",[res.locals.user.id]);
+        const requests = await query("select * from requests where id_user = ?",[req.user.id]);
         if (requests.length <= 0) {
             res.status(404).json({
                 myResponse: [
@@ -257,17 +255,16 @@ router.get("/user",verifyJWT,async(req, res) => {
 
 // -9 Send Request  by Id[User]
 router.post(
-    "/:id",
-     verifyJWT ,
+    "/:id", verifyJWT ,
     async (req, res) => {
     try {
-
         const query = util.promisify(conn.query).bind(conn); // transform query mysql --> promise to use [await/async]
-
+        //console.log(req.cookies.jwt.id);
+        console.log(req.user.id);
         //  CHECK IF Request EXISTS or Waiting
         const checkRequestExists = await query(
           "select * from requests where status = '0' and  id_medicine  = ? and id_user = ?",
-            [req.params.id,res.locals.user.id]
+            [req.params.id,req.user.id]
         );
         if (checkRequestExists.length > 0) {
             //console.log(date_time);
@@ -302,11 +299,12 @@ router.post(
 
 
                 // 3- PREPARE Request OBJECT
+                console.log(res.cookie.id);
                 const Request = {
                     id_medicine: req.params.id,
                     id_category:checkMedicineExists[0].id_category,
                     date:currentDate,
-                    id_user:res.locals.user.id
+                    id_user:res.user.id
                 };
                 //console.log(Request)
         

@@ -59,7 +59,7 @@ router.post(
                     email: req.body.email,
                     password: await bcrypt.hash(req.body.password, 10),
                     token: crypto.randomBytes(16).toString("hex"),
-                    Phone_Number :  encrypt(req.body.Phone_Number)
+                    Phone_Number :decrypt(req.body.Phone_Number) 
                 };
 
                 // 4 - INSERT patient INTO DB
@@ -205,7 +205,7 @@ router.get("",verifyJWT , admin,async(req, res) => {
 
             patients.map((patient) => {
                 patient.image_url = "http://" + req.hostname + ":4000/" + patient.image_url;
-               // patient.Phone_Number = decrypt(patient.Phone_Number)
+               patient.Phone_Number = encrypt(patient.Phone_Number)
             });
             res.status(200).json(patients);
         }
@@ -237,6 +237,7 @@ verifyJWT,admin,
             }
             
             patient[0].image_url = "http://" + req.hostname + ":4000/" + patient[0].image_url;
+            patient[0].Phone_Number = decrypt(patient[0].Phone_Number);
             // medicine.map((medicinee) => {
             //     medicinee.image_url = "http://" + req.hostname + ":4000/" + medicinee.image_url;
             // });
