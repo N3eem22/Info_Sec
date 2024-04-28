@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import CryptoJS from "crypto-js"; // Import CryptoJS library
 import { Buffer } from "buffer";
-import {Decrypt} from "../../helper/Decrypt";
+import Decrypt from "../../helper/Decrypt";
 const ManagePatients = () => {
     
   const auth = getAuthUser();
@@ -39,7 +39,15 @@ const ManagePatients = () => {
           token: auth.token,
         },
       })
-      .then((resp) => {
+      .then(async (resp) => {
+        console.log(resp.data);
+        for (let i = 0; i < resp.data.length; i ++) { 
+          const current = resp.data[i]; 
+          current.Phone_Number = await Decrypt(current.Phone_Number);
+          console.log(current.Phone_Number);
+          // console.log(await Decrypt(current.data.Phone_Number));
+          resp.data[i] = current;
+        }
         setPatients({
           ...Patients,
           results: resp.data,
@@ -175,7 +183,7 @@ const ManagePatients = () => {
                     <td>{Patient.name}</td>
                     <td>{Patient.email}</td>
                     <td>{Patient.role}</td>
-                    <td>{Decrypt(Patient.Phone_Number)}</td>
+                    <td>{Patient.Phone_Number}</td>
                     <td>
                       <button
                         className="btn btn-sm btn-danger"
