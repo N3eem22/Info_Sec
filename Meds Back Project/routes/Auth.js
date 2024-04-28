@@ -5,7 +5,7 @@ const util = require("util"); // helper
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const upload = require("../middleware/uploadImages");
-const {encrypt} = require("../middleware/Crypto") 
+const {encrypt, decrypt} = require("../middleware/Crypto") 
  const jwt =require("jsonwebtoken");
 const { log } = require("util");
 
@@ -178,6 +178,21 @@ router.post(
     }
   );
 
+  router.get("/decrypt" , (req,res)=>{
+    const {Phone_Number} = req.body;
+    if (!Phone_Number) {
+     return res.status(400).json({
+        Phone_Number : " "
+      });
+    } 
+    try { 
+      const decrypted = decrypt(Phone_Number);
+      return res.status(200).json(decrypted); 
+      
+      } catch(err) {
+      res.status(500).json(err); 
+      }
+  })
 
   router.post("/logout", (req, res) => {
     try {
@@ -206,5 +221,6 @@ router.post(
     }
   });
   
+
   
 module.exports = router;

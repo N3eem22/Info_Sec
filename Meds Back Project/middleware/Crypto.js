@@ -5,7 +5,6 @@ const ENCRYPTION_KEY = Buffer.from(process.env.ENCRYPTION_KEY, 'utf8');
 //console.log("Key Length:", ENCRYPTION_KEY.length);  // Should print 24
 
 const IV_LENGTH = 8; // For 3DES, this is typically 8
-
 function encrypt(text) {
     try {
         let iv = crypto.randomBytes(IV_LENGTH);
@@ -18,7 +17,6 @@ function encrypt(text) {
         return null;
     }
 }
-
 function decrypt(text) {
     try {
         let textParts = text.split(':');
