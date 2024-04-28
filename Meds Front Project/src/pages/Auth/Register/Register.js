@@ -22,10 +22,12 @@ const Register = () => {
     e.preventDefault();
     setRegister({ ...register, loading: true, err: [] });
     axios
-      .post("http://localhost:4000/auth/register", {
+      .post("http://localhost:4000/auth/register",  {
         email: register.email,
         password: register.password,
         name: register.name,
+      }, {
+        withCredentials: true // This ensures cookies are sent with requests
       })
       .then((resp) => {
         setRegister({ ...register, loading: false, err: [] });

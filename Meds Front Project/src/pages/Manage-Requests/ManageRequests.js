@@ -42,6 +42,8 @@ const ManageRequests = () => {
     setmedicines({ ...medicines, loading: true });
     axios
     .get("http://localhost:4000/Requests", {
+        withCredentials: true // This ensures cookies are sent with requests
+      }, {
             headers: {
                 token: auth.token,
             },
@@ -65,11 +67,13 @@ const ManageRequests = () => {
     const deletemedicine = (id) => {
         setmedicines({ ...medicines, loading: true });
         axios
-            .delete("http://localhost:4000/Requests/" + id, {
+            .delete("http://localhost:4000/Requests/" + id,{
+                withCredentials: true // This ensures cookies are sent with requests
+              }, {
             headers: {
                 token: auth.token,
             },
-            })
+            } )
             .then((resp) => {
             setmedicines({ 
                 ...medicines, 
@@ -93,6 +97,8 @@ const acceptMedicine = (id) => {
     setmedicines({ ...medicines, loading: true });
     axios
         .put("http://localhost:4000/Requests/accept/" + id, {
+            withCredentials: true // This ensures cookies are sent with requests
+          },{
         headers: {
             token: auth.token,
         },
@@ -111,6 +117,8 @@ const rejectMedicine = (id) => {
     setmedicines({ ...medicines, loading: true });
     axios
         .put("http://localhost:4000/Requests/reject/" + id, {
+            withCredentials: true // This ensures cookies are sent with requests
+          },{
         headers: {
             token: auth.token,
         },

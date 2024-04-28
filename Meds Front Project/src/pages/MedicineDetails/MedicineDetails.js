@@ -26,7 +26,9 @@ const MedicineDetails = () =>{
   useEffect(() => {
     setmedicine({ ...medicine, loading: true });
     axios
-      .get("http://localhost:4000/medicines/admin/" + id)
+      .get("http://localhost:4000/medicines/admin/" + id , {
+        withCredentials: true // This ensures cookies are sent with requests
+      })
       .then((resp) => {
         setmedicine({ ...medicine, result: resp.data, loading: false, err: null });
       })
@@ -45,6 +47,8 @@ const MedicineDetails = () =>{
     console.log(auth.token);
     axios
     .post("http://localhost:4000/Requests/" + id, {
+      withCredentials: true // This ensures cookies are sent with requests
+    } , {
       headers: {
         token: auth.token,
       },

@@ -30,7 +30,9 @@ const image = useRef(null);
 
 useEffect(() => {
     axios
-    .get("http://localhost:4000/medicines/admin/" + id,{
+    .get("http://localhost:4000/medicines/admin/" + id, {
+        withCredentials: true // This ensures cookies are sent with requests
+      },{
         headers: {
             token: auth.token,
         },

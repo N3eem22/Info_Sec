@@ -34,7 +34,7 @@ console.log(typeof(currentDate));
 // -5 Accept  requests [Admin]
 router.put(
     "/accept/:id", 
-    verifyJWT,
+    verifyJWT , admin,
     //admin,
     async (req, res) => {
     try {

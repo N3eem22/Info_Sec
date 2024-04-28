@@ -17,6 +17,8 @@ useEffect(() => {
     setHistory({...history, loading: true});
     axios.
     get("http://localhost:4000/search/HistorySearches/" + Auth.id, {
+      withCredentials: true // This ensures cookies are sent with requests
+    }, {
       headers: {
           token: Auth.token,
       },

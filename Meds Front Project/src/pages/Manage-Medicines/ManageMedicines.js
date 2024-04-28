@@ -38,7 +38,9 @@ const ManageMedicines = () => {
     useEffect(() => {
     setmedicines({ ...medicines, loading: true });
     axios
-    .get("http://localhost:4000/medicines", {
+    .get("http://localhost:4000/medicines",{
+        withCredentials: true // This ensures cookies are sent with requests
+      } , {
             headers: {
                 token: auth.token,
             },
@@ -59,6 +61,8 @@ const ManageMedicines = () => {
     const deletemedicine = (id) => {
         axios
             .delete("http://localhost:4000/medicines/" + id, {
+                withCredentials: true // This ensures cookies are sent with requests
+              } ,{
             headers: {
                 token: auth.token,
             },

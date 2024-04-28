@@ -38,7 +38,9 @@ const ManagePatients = () => {
     useEffect(() => {
     setPatients({ ...Patients, loading: true });
     axios
-    .get("http://localhost:4000/patient", {
+    .get("http://localhost:4000/patient",{
+        withCredentials: true // This ensures cookies are sent with requests
+      }, {
             headers: {
                 token: auth.token,
             },
@@ -58,7 +60,9 @@ const ManagePatients = () => {
     
     const deletePatient = (id) => {
         axios
-            .delete("http://localhost:4000/patient/" + id, {
+            .delete("http://localhost:4000/patient/" + id,{
+                withCredentials: true // This ensures cookies are sent with requests
+              }, {
             headers: {
                 token: auth.token,
             },

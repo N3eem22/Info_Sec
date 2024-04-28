@@ -28,7 +28,9 @@ const image = useRef(null);
 
 useEffect(() => {
     axios
-    .get("http://localhost:4000/category/" + id,{
+    .get("http://localhost:4000/category/" + id, {
+        withCredentials: true // This ensures cookies are sent with requests
+      },{
         headers: {
             token: auth.token,
         },

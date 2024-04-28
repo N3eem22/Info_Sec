@@ -5,7 +5,7 @@ const admin = (req, res, next) => {
       msg: "Error Uccured",
     });
   }
-
+console.log(req.user.role  ,"sds");
   if (req.user.role !== 1) {
     // Check if user role is not admin
     return res.status(403).json({

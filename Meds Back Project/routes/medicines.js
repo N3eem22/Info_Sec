@@ -184,7 +184,7 @@ router.put(
 // 2-3 DELETE medicine [ADMIN]
 router.delete(
     "/:id", // params
-    admin,
+    verifyJWT, admin,
     async (req, res) => {
         try {
             // 1- CHECK IF medicine EXISTS OR NOT

@@ -10,7 +10,13 @@ app.use(express.urlencoded({ extended: true })); //To Access url form encoded
 app.use(express.static("upload"));
 app.use(require("cookie-parser")());
 const cors = require("cors");
-app.use(cors()); // allow HTTP request local host
+const corsOptions = {// or the specific URL of your front end
+  origin: 'http://localhost:3000',
+  credentials: true, // to allow cookies to be sent across origins
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));// allow HTTP request local host
 const session = require('express-session');
 
 app.use(session({

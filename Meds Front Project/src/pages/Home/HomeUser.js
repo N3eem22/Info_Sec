@@ -22,7 +22,11 @@ import Spinner from 'react-bootstrap/Spinner';
        useEffect(() => {
          setmedicines({ ...medicines, loading: true });
          axios
-           .get("http://localhost:4000/category")
+           .get("http://localhost:4000/category" , {
+            
+                withCredentials: true // This ensures cookies are sent with requests
+              
+           })
     
            .then((resp) => {
             console.log(resp);
@@ -58,7 +62,7 @@ import Spinner from 'react-bootstrap/Spinner';
       )}  */}
 <div className="row m-5">
       <div className="categories container row">
-      {medicines.results.map((medicine) => (
+      {Array.isArray(medicines.results) && medicines.results?.map((medicine) => (
  
     <div class="categorieslevel  now-color col-3">
         <p class="category-link ">

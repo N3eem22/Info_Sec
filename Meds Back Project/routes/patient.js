@@ -180,6 +180,7 @@ router.delete(
 // 4-4 show All patient [ADMIN]
 router.get("",verifyJWT , admin,async(req, res) => {
     try{
+        console.log(req.cookies.jwt);
         const query = util.promisify(conn.query).bind(conn);
         const patients = await query("select * from users");
         if (patients.length <= 0) {
@@ -218,7 +219,7 @@ router.get("",verifyJWT , admin,async(req, res) => {
 
 // Show A patient [ADMIN]
 router.get("/:id",
-    admin,verifyJWT ,
+verifyJWT,admin,
     async(req, res) => {
         const query = util.promisify(conn.query).bind(conn);
         const patient = await query("select * from users where id = ?", [

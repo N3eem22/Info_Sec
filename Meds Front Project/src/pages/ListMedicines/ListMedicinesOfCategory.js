@@ -23,6 +23,8 @@ const ListMedicinesOfCategory = () => {
       setmedicines({ ...medicines, loading: true });
       axios
         .get("http://localhost:4000/medicines/category/" + id , {
+          withCredentials: true // This ensures cookies are sent with requests
+        }, {
           params: {
             search: search,
           },

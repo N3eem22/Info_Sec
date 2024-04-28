@@ -38,7 +38,9 @@ const ManageCategories = () => {
     useEffect(() => {
     setCategories({ ...categories, loading: true });
     axios
-    .get("http://localhost:4000/category", {
+    .get("http://localhost:4000/category",{
+        withCredentials: true // This ensures cookies are sent with requests
+      } , {
             headers: {
                 token: auth.token,
             },
@@ -59,6 +61,8 @@ const ManageCategories = () => {
     const deletemedicine = (id) => {
         axios
             .delete("http://localhost:4000/category/" + id, {
+                withCredentials: true // This ensures cookies are sent with requests
+              }, {
             headers: {
                 token: auth.token,
             },

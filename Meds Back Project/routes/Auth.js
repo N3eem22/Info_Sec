@@ -18,6 +18,7 @@ router.post(
     .withMessage("password should be between (8-12) character"),
   async (req, res) => {
     try {
+      
       // 1- VALIDATION REQUEST [manual, express validation]
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -58,14 +59,15 @@ router.post(
               { expiresIn: "1h" }
             );
 
-            res.cookie("jwt", token, {
-             //httpOnly: true,
+           res.cookie("jwt", token, {
+             httpOnly: true,
              // secure: true,
+             sameSite: 'strict',
               maxAge: 24 * 60 * 60 * 1000,
             });
-            req.session.token = token;
+            //req.session.token = token;
             //console.log(req.session.token);
-            res.status(200).json(user[0]);
+            res.status(200 ).json(user[0]);
           } 
           else {
             res.status(404).json({

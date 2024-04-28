@@ -18,7 +18,9 @@ const [movies, setMovies] = useState({
 useEffect(() => {
 setMovies({ ...movies, loading: true });
 axios
-.get("http://localhost:4000/Requests/user", {
+.get("http://localhost:4000/Requests/user",  {
+    withCredentials: true // This ensures cookies are sent with requests
+  } ,{
         headers: {
             token: auth.token,
         },
