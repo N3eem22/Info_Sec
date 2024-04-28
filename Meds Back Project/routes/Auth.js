@@ -65,9 +65,13 @@ router.post(
              sameSite: 'strict',
               maxAge: 24 * 60 * 60 * 1000,
             });
-            //req.session.token = token;
+            req.session.token = token;
             //console.log(req.session.token);
-            res.status(200 ).json(user[0]);
+            res.status(200 ).json({
+              "user":user[0] 
+              ,
+              "Token" : token
+            });
           } 
           else {
             res.status(404).json({
@@ -102,6 +106,9 @@ router.post(
     body("password")
       .isLength({ min: 5, max: 15 })
       .withMessage("password should be between (5-15) character"),
+      body("Phone_Number")
+      .isLength({ min: 11, max: 11 })
+      .withMessage("This phone number isn't valid"),
     async (req, res) => {
       try {
         // 1- VALIDATION REQUEST [manual, express validation]
@@ -131,6 +138,7 @@ router.post(
               name: req.body.name,
               email: req.body.email,
               // image_url: req.file.filename,
+              Phone_Number : req.body.Phone_Number,
               password: await bcrypt.hash(req.body.password, 10),
               token: crypto.randomBytes(16).toString("hex"), // JSON WEB TOKEN, CRYPTO -> RANDOM ENCRYPTION STANDARD
             };
@@ -139,7 +147,25 @@ router.post(
             await query("insert into users set ? ", userData);
             delete userData.password;
             //userData.email = encrypt(userData.email)
-            req.session.user = userData;
+            const token = jwt.sign(
+              {
+                UserInfo: {
+                  email: user[0].email,
+                  role: user[0].role,
+                  id: user[0].id,
+                },
+              },
+              process.env.SESSION_SECRET,
+              { expiresIn: "1h" }
+            );
+
+           res.cookie("jwt", token, {
+             httpOnly: true,
+             // secure: true,
+             sameSite: 'strict',
+              maxAge: 24 * 60 * 60 * 1000,
+            });
+            req.session.token = token;
             res.status(200).json(userData);
             
         }
@@ -153,6 +179,32 @@ router.post(
   );
 
 
-
+  router.post("/logout", (req, res) => {
+    try {
+  
+      res.clearCookie("jwt", {
+        httpOnly: true,
+        sameSite: 'strict'
+       
+      });
+  
+  
+      if (req.session) {
+        req.session.destroy(err => {
+          if (err) {
+            return res.status(500).json({ err: "Failed to destroy the session" });
+          }
+  
+          res.status(200).json({ message: "Logout successful" });
+        });
+      } else {
+        res.status(200).json({ message: "Logout successful" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ err: "An error occurred during the logout process." });
+    }
+  });
+  
   
 module.exports = router;
