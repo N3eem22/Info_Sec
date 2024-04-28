@@ -46,12 +46,13 @@ const MedicineDetails = () =>{
     setmedicine({ ...medicine, loading: true });
     console.log(auth.token);
     axios
-    .post("http://localhost:4000/Requests/" + id, {
-      withCredentials: true // This ensures cookies are sent with requests
-    } , {
+    .post(`http://localhost:4000/Requests/${id}`,{
+      withCredentials : true
+    } ,{
       headers: {
         token: auth.token,
-      },
+        id : auth.id
+      }
       })
         .then((resp) => {
           setmedicine({ ...medicine, reload: medicine.reload + 1 });

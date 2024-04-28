@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const verifyJWT = (req, res, next) => {
   const cookies = req.cookies;
+  //console.log(req.cookies.jwt);
   if (!cookies?.jwt) return res.sendStatus(401); 
   const token = cookies.jwt;
   jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
@@ -15,7 +16,11 @@ const verifyJWT = (req, res, next) => {
       role: decoded.UserInfo.role, // Check if the role is defined as 'role' in the token
       id: decoded.UserInfo.id
     };
-
+    res.locals.user = {
+      email: decoded.UserInfo.email,
+      role: decoded.UserInfo.role,
+      id: decoded.UserInfo.id
+    };
     next();
   });
 };
