@@ -80,37 +80,37 @@ const MedicineDetails = () =>{
 
 
 
-<div class="container-fault ">
-    <div class="col-lg-8 border p-3 main-section bg-white mdd justify-content-center align-items-center">
+<div className="container-fault ">
+    <div className="col-lg-8 border p-3 main-section bg-white mdd justify-content-center align-items-center">
 
-        <div class="row m-0 ">
-            <div class="col-lg-4 left-side-product-box pb-3">
-                <img src={medicine.result.image_url} class="border p-3"/>
+        <div className="row m-0 ">
+            <div className="col-lg-4 left-side-product-box pb-3">
+                <img src={medicine.result.image_url} className="border p-3"/>
 
             </div>
-            <div class="col-lg-8">
-                <div class="right-side-pro-detail border p-3  my-auto MD-mydiv">
-                    <div class="row">
-                        <div class="col-lg-12">
+            <div className="col-lg-8">
+                <div className="right-side-pro-detail border p-3  my-auto MD-mydiv">
+                    <div className="row">
+                        <div className="col-lg-12">
 
-                            <p class="m-0 p-0">{medicine.result.name}</p>
+                            <p className="m-0 p-0">{medicine.result.name}</p>
                         </div>
-                        <div class="col-lg-12">
-                            <p class="m-0 p-0 price-pro">{medicine.result.price} <span className="fs-4">$</span> </p>
-                            <hr class="p-0 m-0"/>
+                        <div className="col-lg-12">
+                            <p className="m-0 p-0 price-pro">{medicine.result.price} <span className="fs-4">$</span> </p>
+                            <hr className="p-0 m-0"/>
                         </div>
-                        <div class="col-lg-12 pt-2">
+                        <div className="col-lg-12 pt-2">
                             <h5>{medicine.result.NameOfCategory}</h5>
                             <p className="MD-span">{medicine.result.description}</p>
-                            <hr class="m-0 pt-2 mt-2"/>
+                            <hr className="m-0 pt-2 mt-2"/>
                         </div>
 
 
-                        <div class="col-lg-12 mt-3">
-                            <div class="row">
+                        <div className="col-lg-12 mt-3">
+                            <div className="row">
 
-                                <div class="col-lg-6 ms-auto MD">
-                                    {/* <a href="#" class="btn btn-success w-100">Buy Now</a> */}
+                                <div className="col-lg-6 ms-auto MD">
+                                    {/* <a href="#" className="btn btn-success w-100">Buy Now</a> */}
                                     <button
                                       className="btn btn-sm btn-success"
                                       onClick={(e) => {

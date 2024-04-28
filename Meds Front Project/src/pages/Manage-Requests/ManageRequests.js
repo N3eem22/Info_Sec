@@ -40,14 +40,13 @@ const ManageRequests = () => {
     
     useEffect(() => {
     setmedicines({ ...medicines, loading: true });
-    axios
-    .get("http://localhost:4000/Requests", {
-        withCredentials: true // This ensures cookies are sent with requests
-      }, {
-            headers: {
-                token: auth.token,
-            },
-        })
+    console.log( auth.token);
+    axios.get("http://localhost:4000/Requests", {
+    withCredentials: true, // This ensures cookies are sent with requests
+    headers: {
+        token: auth.token,// Include the authentication token here
+    },
+})
         .then((resp) => {
         setmedicines({ ...medicines, 
             results: resp.data,
@@ -58,7 +57,7 @@ const ManageRequests = () => {
         setmedicines({
             ...medicines,
             loading: false,
-            errorManageRequest: err.response.data.myResponse[0].error,
+            // errorManageRequest: err.response.data.myResponse[0].error,
         });
         });
     }, [medicines.reload]);

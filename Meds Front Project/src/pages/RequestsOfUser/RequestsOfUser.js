@@ -33,7 +33,7 @@ axios
         setMovies({
             ...movies,
             loading: false,
-            err: errors.response.data.myResponse[0].error,
+            // err: errors.response.data.myResponse[0].error,
             });
         //console.log(errors.response.data.myResponse[0].error);
     });

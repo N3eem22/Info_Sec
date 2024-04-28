@@ -52,7 +52,7 @@ const ManageCategories = () => {
         setCategories({
             ...categories,
             loading: false,
-            errorManageMedicine: err.response.data.myResponse[0].error,
+            // errorManageMedicine: err.response.data.myResponse[0].error,
         });
         });
     }, [categories.reload]);
@@ -122,7 +122,7 @@ const createCategory = (e) => {
         ...categories,
         loading: false,
         success: null,
-        errorAdd: err.response.data.myResponse[0].error,
+        // errorAdd: err.response.data.myResponse[0].error,
         });
     });
 };

@@ -18,7 +18,6 @@ function encrypt(text) {
         return null;
     }
 }
-
 function decrypt(text) {
     try {
         let textParts = text.split(':');

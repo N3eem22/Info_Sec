@@ -46,7 +46,7 @@ const ListMedicines = () => {
             ...medicines,
             loading: false,
             success:false,
-            err: err.response.data.myResponse[0].error,
+            // err: err.response.data.myResponse[0].error,
           });
         });
     }, [medicines.reload]);
