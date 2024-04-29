@@ -7,13 +7,13 @@ import "../Register/style/Register.css"
 import { setAuthUser } from "../../../helper/Storage";
 import { useNavigate } from "react-router-dom";
 
-
 const Register = () => {
   const navigate = useNavigate();
   const [register, setRegister] = useState({
     email: "",
     password: "",
     name: "",
+    Phone_Number: "",
     loading: false,
     err: [],
   });
@@ -26,13 +26,13 @@ const Register = () => {
         email: register.email,
         password: register.password,
         name: register.name,
+        Phone_Number: register.Phone_Number,
       }, {
         withCredentials: true // This ensures cookies are sent with requests
       })
       .then((resp) => {
         setRegister({ ...register, loading: false, err: [] });
         setAuthUser(resp.data.user);
-        //console.log(resp.data);
         sessionStorage.setItem("Token", JSON.stringify(resp.data.Token));
         navigate("/");
       })
@@ -49,7 +49,7 @@ const Register = () => {
     <div className="login-container">
       <h1>Registration Form</h1>
 
-      {register.err.map((error, index) => (
+      {register.err && register.err.map((error, index) => (
         <Alert key={index} variant="danger" className="p-2">
           {error.msg}
         </Alert>
@@ -70,9 +70,7 @@ const Register = () => {
             type="email"
             placeholder="Email"
             value={register.email}
-            onChange={(e) =>
-              setRegister({ ...register, email: e.target.value })
-            }
+            onChange={(e) => setRegister({ ...register, email: e.target.value })}
           />
         </Form.Group>
 
@@ -81,9 +79,15 @@ const Register = () => {
             type="password"
             placeholder="Password"
             value={register.password}
-            onChange={(e) =>
-              setRegister({ ...register, password: e.target.value })
-            }
+            onChange={(e) => setRegister({ ...register, password: e.target.value })}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Control
+            type="number"
+            placeholder="Phone Number"
+            value={register.Phone_Number}
+            onChange={(e) => setRegister({ ...register, Phone_Number: e.target.value })}
           />
         </Form.Group>
 

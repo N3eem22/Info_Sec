@@ -6,15 +6,21 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { removeAuthUser, getAuthUser } from "../helper/Storage";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 
 
 const Header = () => {
 const navigate = useNavigate();
 const auth = getAuthUser();
-const Logout = () => {
-removeAuthUser();
-navigate("/Login");
+
+const logout = async () => {
+    try {
+      await axios.post("http://localhost:4000/auth/logout" );
+      removeAuthUser();
+      navigate("/login"); 
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
 };
 
 return (
@@ -80,8 +86,8 @@ return (
         </Nav>
 
         <Nav className="ms-auto">
-        {/* Authenticated Routes  */}
-        {auth && <Nav.Link onClick={Logout}>Logout</Nav.Link>}
+       
+        {auth && <Nav.Link onClick={logout}>Logout</Nav.Link>}
         </Nav>
     </Container>
     </Navbar>

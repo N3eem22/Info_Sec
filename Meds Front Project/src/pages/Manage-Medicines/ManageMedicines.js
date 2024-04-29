@@ -175,7 +175,6 @@ return (
                     <th className="text-light">MedicineName</th>
                     <th className="text-light">Price</th>
                     <th className="text-light">ExpirationDate</th>
-                    <th className="text-light">CategoryName</th>
                     <th className="text-light">Action</th>
                 </tr>
             </thead>
@@ -201,9 +200,7 @@ return (
                     <td>
                         {medicine.expiration_date}
                     </td>
-                    <td>
-                        {medicine.NameOfCategory}
-                    </td>
+                    
                     <td>
                     <button
                         className="btn btn-sm btn-danger"

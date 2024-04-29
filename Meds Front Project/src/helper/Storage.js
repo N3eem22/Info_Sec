@@ -13,5 +13,19 @@ export const getAuthUser = (data) => {
 };
 
 export const removeAuthUser = () => {
-  if (localStorage.getItem("user")) localStorage.removeItem("user");
+  // Remove user data from local storage
+  if (localStorage.getItem("user")) {
+    localStorage.removeItem("user");
+  }
+
+  // Remove user data from session storage
+  if (sessionStorage.getItem("user")) {
+    sessionStorage.removeItem("user");
+  }
+
+  // Clear user cookie
+  document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 };
+
+
+
