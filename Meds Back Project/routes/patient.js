@@ -12,6 +12,7 @@ const {encrypt} = require("../middleware/Crypto");
 const {decrypt} = require("../middleware/Crypto");
 const verifyJWT= require("../middleware/verifyJWT.JS");
 // 4-1 CREATE patient [ADMIN]
+
 router.post(
     "",
     verifyJWT , admin,
@@ -206,6 +207,7 @@ router.get("",verifyJWT , admin,async(req, res) => {
             patients.map((patient) => {
                 patient.image_url = "http://" + req.hostname + ":4000/" + patient.image_url;
                patient.Phone_Number = encrypt(patient.Phone_Number)
+            //    console.log(`Decrypted phone :  ${(patient.Phone_Number)}`);
             });
             res.status(200).json(patients);
         }
