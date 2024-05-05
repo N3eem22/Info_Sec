@@ -26,7 +26,6 @@ const Register = () => {
         email: register.email  || "sasa@gmail.com",
         password: register.password,
         name: register.name,
-        Phone_Number: register.Phone_Number,
       }, {
         withCredentials: true // This ensures cookies are sent with requests
       })
@@ -82,14 +81,7 @@ const Register = () => {
             onChange={(e) => setRegister({ ...register, password: e.target.value })}
           />
         </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Control
-            type="number"
-            placeholder="Phone Number"
-            value={register.Phone_Number}
-            onChange={(e) => setRegister({ ...register, Phone_Number: e.target.value })}
-          />
-        </Form.Group>
+        
 
         <Button
           className="btn btn-dark w-100"
