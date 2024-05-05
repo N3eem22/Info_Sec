@@ -130,7 +130,6 @@ router.post(
           name: req.body.name,
           email: req.body.email,
           // image_url: req.file.filename,
-          Phone_Number: req.body.Phone_Number,
           password: await bcrypt.hash(req.body.password, 10),
           token: crypto.randomBytes(16).toString("hex"), // JSON WEB TOKEN, CRYPTO -> RANDOM ENCRYPTION STANDARD
         };

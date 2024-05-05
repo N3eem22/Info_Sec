@@ -215,7 +215,7 @@ router.delete(
 );
 
 // 2-4 show All medicine [ADMIN, USER]
-router.get("", verifyJWT,async(req, res) => {
+router.get("",async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
         const medicines = await query("select * from medicines");
