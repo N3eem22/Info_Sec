@@ -8,7 +8,7 @@ const upload = require("../middleware/uploadImages");
 const { encrypt, decrypt } = require("../middleware/Crypto");
 const jwt = require("jsonwebtoken");
 const { log } = require("util");
-
+const verifyJWT = require("../middleware/verifyJWT.JS");
 // 1-1 LOGIN
 router.post(
   "/login",
@@ -185,13 +185,9 @@ router.post("/decrypt", (req, res) => {
   }
 });
 
-router.post("/logout", (req, res) => {
+router.post("/logout" , (req, res) => {
   try {
-    res.clearCookie("jwt", {
-      httpOnly: true,
-      sameSite: "strict",
-    });
-
+    res.clearCookie('jwt');
     if (req.session) {
       req.session.destroy((err) => {
         if (err) {

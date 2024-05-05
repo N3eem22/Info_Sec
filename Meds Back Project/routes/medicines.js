@@ -215,7 +215,7 @@ router.delete(
 );
 
 // 2-4 show All medicine [ADMIN, USER]
-router.get("", async(req, res) => {
+router.get("", verifyJWT,async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
         const medicines = await query("select * from medicines");
@@ -246,7 +246,7 @@ router.get("", async(req, res) => {
 
 
 // show A medicine [Admin]
-router.get("/admin/:id", async(req, res) => {
+router.get("/admin/:id" ,async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
          const medicine = await query("select * from medicines where id = ?", [
@@ -279,7 +279,7 @@ router.get("/admin/:id", async(req, res) => {
 });
 
 // show A medicine [USER]
-router.get("/user/:id", async(req, res) => {
+router.get("/user/:id" ,async(req, res) => {
     try{
         const query = util.promisify(conn.query).bind(conn);
          const medicine = await query("select * from medicines where id = ?", [

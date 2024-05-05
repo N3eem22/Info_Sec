@@ -15,7 +15,9 @@ const auth = getAuthUser();
 
 const logout = async () => {
     try {
-      await axios.post("http://localhost:4000/auth/logout" );
+      await axios.post("http://localhost:4000/auth/logout" , {
+        withCredentials: true
+      } );
       removeAuthUser();
       navigate("/login"); 
     } catch (error) {

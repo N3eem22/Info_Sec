@@ -23,7 +23,7 @@ const Register = () => {
     setRegister({ ...register, loading: true, err: [] });
     axios
       .post("http://localhost:4000/auth/register",  {
-        email: register.email,
+        email: register.email  || "sasa@gmail.com",
         password: register.password,
         name: register.name,
         Phone_Number: register.Phone_Number,

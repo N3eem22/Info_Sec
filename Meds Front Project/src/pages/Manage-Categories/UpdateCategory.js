@@ -69,6 +69,8 @@ const updateMovie = (e) => {
     }
     axios
     .put("http://localhost:4000/category/" + id, formData, {
+        withCredentials: true // This ensures cookies are sent with requests
+      }, {
         headers: {
         token: auth.token,
         "Content-Type": "multipart/form-data",
@@ -87,7 +89,7 @@ const updateMovie = (e) => {
         ...Category,
         loading: false,
         success: null,
-        err: err.response.data.myResponse[0].error,
+        err: err.response.data.myResponse.error,
         });
     });
 };

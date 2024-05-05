@@ -1,4 +1,5 @@
 // COOKIES, LOCAL STORAGE
+import Cookies from 'js-cookie';
 
 export const setAuthUser = (data) => {
   // save object to the local storage
@@ -17,15 +18,10 @@ export const removeAuthUser = () => {
   if (localStorage.getItem("user")) {
     localStorage.removeItem("user");
   }
-
   // Remove user data from session storage
-  if (sessionStorage.getItem("user")) {
-    sessionStorage.removeItem("user");
-  }
-
-  // Clear user cookie
-  document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-};
+  sessionStorage.clear();
+  Cookies.remove('jwt');
+  };
 
 
 

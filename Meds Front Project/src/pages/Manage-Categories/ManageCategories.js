@@ -100,7 +100,9 @@ const createCategory = (e) => {
         formData.append("image", image.current.files[0]);
     }
     axios
-    .post("http://localhost:4000/category", formData, {
+    .post("http://localhost:4000/category",formData,   {
+        withCredentials: true // This ensures cookies are sent with requests
+      },{
         headers: {
         token: auth.token,
         "Content-Type": "multipart/form-data",

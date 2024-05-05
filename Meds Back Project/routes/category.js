@@ -13,8 +13,7 @@ const verifyJWT= require("../middleware/verifyJWT.JS");
 
 // 3-1 CREATE category [ADMIN]
 router.post(
-    "",
-    admin,
+    "",verifyJWT ,admin,
     upload.single("image"),
     body("name")
     .isString()

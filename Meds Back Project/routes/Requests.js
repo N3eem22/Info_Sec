@@ -255,16 +255,17 @@ router.get("/user",verifyJWT,async(req, res) => {
 
 // -9 Send Request  by Id[User]
 router.post(
-    "/:id", verifyJWT ,
+    "/:id",
     async (req, res) => {
     try {
         const query = util.promisify(conn.query).bind(conn); // transform query mysql --> promise to use [await/async]
         //console.log(req.cookies.jwt.id);
-        console.log(req.user.id);
+      
+        const {id}=req.headers 
         //  CHECK IF Request EXISTS or Waiting
         const checkRequestExists = await query(
           "select * from requests where status = '0' and  id_medicine  = ? and id_user = ?",
-            [req.params.id,req.user.id]
+            [req.params.id,id]
         );
         if (checkRequestExists.length > 0) {
             //console.log(date_time);
@@ -304,7 +305,7 @@ router.post(
                     id_medicine: req.params.id,
                     id_category:checkMedicineExists[0].id_category,
                     date:currentDate,
-                    id_user:res.user.id
+                    id_user:id
                 };
                 //console.log(Request)
         

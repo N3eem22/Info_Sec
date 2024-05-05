@@ -8,12 +8,8 @@ import { getAuthUser } from "../../helper/Storage";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import CryptoJS from "crypto-js"; // Import CryptoJS library
-<<<<<<< HEAD
-
-=======
 import { Buffer } from "buffer";
 import Decrypt from "../../helper/Decrypt";
->>>>>>> 81148e8e9e97a9367aeed74c26c9c70688df1371
 const ManagePatients = () => {
     
   const auth = getAuthUser();
@@ -35,42 +31,39 @@ const ManagePatients = () => {
   });
 
   useEffect(() => {
-    setPatients({ ...Patients, loading: true });
-    axios
-      .get("http://localhost:4000/patient", {
-        withCredentials: true,
-        headers: {
-          token: auth.token,
-        },
-      })
-<<<<<<< HEAD
-      .then((resp) => {
-=======
-      .then(async (resp) => {
-        console.log(resp.data);
-        for (let i = 0; i < resp.data.length; i ++) { 
-          const current = resp.data[i]; 
-          current.Phone_Number = await Decrypt(current.Phone_Number);
-          console.log(current.Phone_Number);
-          // console.log(await Decrypt(current.data.Phone_Number));
-          resp.data[i] = current;
-        }
->>>>>>> 81148e8e9e97a9367aeed74c26c9c70688df1371
-        setPatients({
-          ...Patients,
-          results: resp.data,
+    const fetchPatients = async () => {
+      setPatients(prevState => ({ ...prevState, loading: true }));
+      try {
+        const response = await axios.get("http://localhost:4000/patient", {
+          withCredentials: true },
+          {
+            headers: {
+              token: auth.token,
+            }
+          }
+         );
+        const decryptedPatients = await Promise.all(response.data.map(async (patient) => {
+          patient.Phone_Number = await Decrypt(patient.Phone_Number);
+          return patient;
+        }));
+        setPatients(prevState => ({
+          ...prevState,
           loading: false,
-          errorManageMedicine: null,
-        });
-      })
-      .catch((err) => {
-        setPatients({
-          ...Patients,
+          results: decryptedPatients,
+          errorManageMedicine: null
+        }));
+      } catch (error) {
+        setPatients(prevState => ({
+          ...prevState,
           loading: false,
-          // errorManageMedicine: err.response.data.myResponse[0].error,
-        });
-      });
-  }, [Patients.reload]);
+          errorManageMedicine: error.response?.data?.myResponse[0]?.error || "An error occurred"
+        }));
+      }
+    };
+  
+    fetchPatients();
+  }, [auth.token]); // Only depend on `auth.token` as it is less likely to change often
+  
 
 //   const CryptoJS = require("crypto-js");
 
@@ -81,43 +74,8 @@ const ManagePatients = () => {
 //     console.log(decryptedPhoneNumber);
 //     return decryptedPhoneNumber;
 // };
-<<<<<<< HEAD
-const decrypt = (encryptedBase64) => {
-    console.log("Encrypted:", encryptedBase64); // Log the encrypted value
-
-    const key = CryptoJS.enc.Utf8.parse('24byte3DESencryptionkey!');
-    const iv = CryptoJS.enc.Hex.parse('0000000000000000');
-
-    try {
-        const decrypted = CryptoJS.TripleDES.decrypt({
-            ciphertext: CryptoJS.enc.Base64.parse(encryptedBase64)
-        }, key, {
-            iv: iv,
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7
-        });
-
-        const decryptedText = decrypted.toString(CryptoJS.enc.Utf8);
-        console.log("Decrypted Phone Number:", decryptedText); // Log the decrypted value
-        
-        return decryptedText;
-    } catch (error) {
-        console.error('Decryption failed:', error);
-        return null;
-    }
-};
-=======
->>>>>>> 81148e8e9e97a9367aeed74c26c9c70688df1371
 
 
-
-
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 81148e8e9e97a9367aeed74c26c9c70688df1371
 // function decrypt(encryptedText ) {
 //   const key = CryptoJS.enc.Utf8.parse("24byte3DESencryptionkey!");
 //   const iv = CryptoJS.enc.Hex.parse("0000000000000000"); // Assuming IV is zero for simplicity, adjust as necessary
@@ -140,20 +98,11 @@ const decrypt = (encryptedBase64) => {
 // }
   const deletePatient = (id) => {
     axios
-<<<<<<< HEAD
-      .delete(`http://localhost:4000/patient/${id}`, {
-        withCredentials: true,
-        headers: {
-          token: auth.token,
-        },
-      })
-=======
       .delete(`http://localhost:4000/patient/${id}`,{withCredentials: true},
        { headers: {
           token: auth.token,
         }},
       )
->>>>>>> 81148e8e9e97a9367aeed74c26c9c70688df1371
       .then((resp) => {
         setPatients({
           ...Patients,
@@ -230,11 +179,7 @@ const decrypt = (encryptedBase64) => {
                     <td>{Patient.name}</td>
                     <td>{Patient.email}</td>
                     <td>{Patient.role}</td>
-<<<<<<< HEAD
-                    <td>{decrypt(Patient.Phone_Number)}</td>
-=======
                     <td>{Patient.Phone_Number}</td>
->>>>>>> 81148e8e9e97a9367aeed74c26c9c70688df1371
                     <td>
                       <button
                         className="btn btn-sm btn-danger"
@@ -245,11 +190,8 @@ const decrypt = (encryptedBase64) => {
                         Delete
                       </button>
                       <Link
-<<<<<<< HEAD
-                        to={`${Patient.id}`}
-=======
+
                         to={Patient.id}
->>>>>>> 81148e8e9e97a9367aeed74c26c9c70688df1371
                         className="btn btn-sm btn-primary mx-2"
                       >
                         Update
